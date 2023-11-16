@@ -54,13 +54,12 @@ with tab1:
     if uploaded_file is not None:
         try:
             spectra = pd.read_csv(uploaded_file,header=None)
-            spectra.columns = ['user_id', 'coupon_id', 'date_received', 'proba']
+            spectra.columns = ['user_id', 'coupon_id', 'proba']
             start_message = st.empty()
             time.sleep(0.5)
             start_message.caption('提交成功，正在评估中，请等待一段时间!!!:coffee::coffee::coffee:')
             if ((df['User_id'] == spectra['user_id']).sum() == len(df)) & \
-                ((df['Coupon_id'] == spectra['coupon_id']).sum() == len(df)) & \
-                ((df['Date_received'] == spectra['date_received']).sum() == len(df)):
+                ((df['Coupon_id'] == spectra['coupon_id']).sum() == len(df)) :
                 spectra['label'] = df['label']
                 sc = spectra[['coupon_id', 'proba', 'label']].groupby('coupon_id').apply(dat).mean()
                 time.sleep(1.5)
